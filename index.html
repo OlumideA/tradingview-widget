@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TradingView Chart with URL Parameters</title>
+    <title>TradingView Chart</title>
 </head>
 <body>
 
@@ -46,15 +46,21 @@
       fontSize: "10",
       noTimeScale: false,
       valuesTracking: "1",
-      changeMode: "price-and-percent",
+      changeMode: ""candlesticks",",
       chartType: "area",
       maLineColor: "#2962FF",
       maLineWidth: 1,
       maLength: 9,
-      headerFontSize: "medium",
+      headerFontSize: "small",
       lineWidth: 2,
       lineType: 0,
-      dateRanges: [`${interval}|5`]
+      dateRanges: [`${interval}|5`],
+      upColor: "#22ab94",
+      downColor: "#f7525f",
+      borderUpColor": "#22ab94",
+      borderDownColor": "#f7525f",
+      wickUpColor: "#22ab94",
+      wickDownColor: "#f7525f"
   });
 
   document.querySelector('.tradingview-widget-container').appendChild(script);
@@ -62,14 +68,11 @@
 </script>
 
 <style>
-    html {
-      width: "800px" !important;
-      height: "500px" !important;
-    }
-    canvas {
-      width: "800px" !important;
-      height: "5OOpx" !important;
-    }
+   *{
+    width: auto;
+    height: 19.5vh;
+    border: none;
+   }
 </style>
 
 </body>
