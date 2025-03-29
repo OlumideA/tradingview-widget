@@ -29,12 +29,12 @@
   script.async = true;
   script.innerHTML = JSON.stringify({
       symbols: [[`${symbol}|${interval}`]],
-      chartOnly: true,
+      chartOnly: false,
       width: "100%",
       height: "100%",
       locale: "en",
       colorTheme: "light",
-      autosize: true,
+      autosize: false,
       showVolume: true,
       showMA: false,
       hideDateRanges: false,
@@ -63,10 +63,6 @@
 
 <style>
     html {
-      width: 918px !important;
-      height: 500px !important;
-    }
-    canvas {
       width: 918px !important;
       height: 500px !important;
     }
