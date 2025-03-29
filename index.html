@@ -1,63 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TradingView Chart</title>
-    <script>
-        // Function to get URL parameters
-        function getParameterByName(name) {
-            const url = new URL(window.location.href);
-            return url.searchParams.get(name) || "BYBIT:BTCUSDT.P|5D"; // Default symbol
-        }
-
-        window.onload = function() {
-            let symbol = getParameterByName("symbol"); // Read symbol from URL parameter
-            let script = document.createElement("script");
-            script.type = "text/javascript";
-            script.src = "https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js";
-            script.async = true;
-
-            // TradingView Widget Configuration
-            script.innerHTML = JSON.stringify({
-                  "symbols": [[symbol]],
-                  "chartOnly": false,
-                  "width": "100%",
-                  "height": "100%",
-                  "locale": "en",
-                  "colorTheme": "light",
-                  "autosize": true,
-                  "showVolume": true,
-                  "showMA": false,
-                  "hideDateRanges": false,
-                  "hideMarketStatus": false,
-                  "hideSymbolLogo": false,
-                  "scalePosition": "right",
-                  "scaleMode": "Normal",
-                  "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
-                  "fontSize": "10",
-                  "noTimeScale": false,
-                  "valuesTracking": "1",
-                  "changeMode": "price-and-percent",
-                  "chartType": "area",
-                  "maLineColor": "#2962FF",
-                  "maLineWidth": 1,
-                  "maLength": 9,
-                  "headerFontSize": "medium",
-                  "lineWidth": 2,
-                  "lineType": 0,
-                  "dateRanges": [
-                    "5d|5"
-                  ]
-            });
-
-            document.getElementById("widget-container").appendChild(script);
-        };
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradingView Widget</title>
 </head>
 <body>
-    <div class="tradingview-widget-container">
-        <div id="widget-container" class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-container">
+    <div id="widget-container" class="tradingview-widget-container__widget"></div>
+    <div class="tradingview-widget-copyright">
+      <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+        <span class="blue-text">Track all markets on TradingView</span>
+      </a>
     </div>
+  </div>
+
+  <script type="text/javascript">
+    // Function to get query parameters from URL
+    function getQueryParam(param) {
+      let urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param) || "BYBIT:MEWUSDT.P|5D"; // Default symbol
+    }
+
+    window.onload = function() {
+      let symbol = getQueryParam("symbol"); // Get the symbol from the URL
+
+      let widgetScript = document.createElement("script");
+      widgetScript.type = "text/javascript";
+      widgetScript.src = "https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js";
+      widgetScript.async = true;
+      document.body.appendChild(widgetScript);
+      
+      widgetScript.onload = function() {
+        let config = document.createElement("script");
+        config.type = "text/javascript";
+        config.innerHTML = `
+        {
+          "symbols": [["${symbol}"]],
+          "chartOnly": false,
+          "width": "100%",
+          "height": "500",
+          "locale": "en",
+          "colorTheme": "light",
+          "autosize": true,
+          "showVolume": true,
+          "showMA": false,
+          "hideDateRanges": false,
+          "hideMarketStatus": false,
+          "hideSymbolLogo": false,
+          "scalePosition": "right",
+          "scaleMode": "Normal",
+          "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
+          "fontSize": "10",
+          "noTimeScale": false,
+          "valuesTracking": "1",
+          "changeMode": "price-and-percent",
+          "chartType": "area",
+          "maLineColor": "#2962FF",
+          "maLineWidth": 1,
+          "maLength": 9,
+          "headerFontSize": "medium",
+          "lineWidth": 2,
+          "lineType": 0,
+          "dateRanges": ["5d|5"]
+        }`;
+        document.getElementById("widget-container").appendChild(config);
+      };
+    };
+  </script>
 </body>
 </html>
