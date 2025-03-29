@@ -58,7 +58,17 @@
   });
 
   document.querySelector('.tradingview-widget-container').appendChild(script);
+
+  const canvas = document.querySelector("canvas");
+  canvas.style.height = canvas.height + "px";
 </script>
+
+<style>
+    canvas {
+      width: 100%;
+      height: auto;
+    }
+</style>
 
 </body>
 </html>
