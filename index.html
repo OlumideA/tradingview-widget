@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic TradingView Chart</title>
+    <title>Crypto Chart</title>
     <style>
         body {
             margin: 0;
@@ -12,7 +12,7 @@
         }
         .chart-container {
             width: 100%;
-            height: 500px;
+            height: 500%;
             margin: 0 auto;
         }
     </style>
@@ -29,38 +29,47 @@
         // Example: yourpage.html?symbol=BYBIT:MEWUSDT.P
         function getSymbolFromUrl() {
             const params = new URLSearchParams(window.location.search);
-            const fullSymbol = params.get('symbol') || 'BYBIT:MEWUSDT.P';
+            const fullSymbol = params.get('symbol') || 'BINANCE:BTCUSDT';
             
             // Split into exchange and symbol parts
             const parts = fullSymbol.split(':');
             return {
-                exchange: parts[0] || 'BYBIT',
-                symbol: parts[1] || 'MEWUSDT.P'
+                exchange: parts[0] || 'BINANCE',
+                symbol: parts[1] || 'BTCUSDT'
             };
         }
 
         // Load TradingView widget
         function loadTradingViewWidget(exchange, symbol) {
             document.getElementById('chart-title').textContent = 
-                `${exchange}:${symbol} Price Chart (5D)`;
+                `${exchange}:${symbol} Price Chart (5m)`;
 
             new TradingView.widget({
-                "autosize": true,
-                "symbol": `${exchange}:${symbol}|5D`,
-                "interval": "5D",
-                "timezone": "Etc/UTC",
-                "theme": "light",
-                "style": "1",
-                "locale": "en",
-                "toolbar_bg": "#f1f3f6",
-                "enable_publishing": false,
-                "hide_top_toolbar": false,
-                "hide_side_toolbar": false,
-                "allow_symbol_change": false,
-                "container_id": "tradingview-widget-container",
-                "overrides": {
-                    "symbolWatermarkProperties.color": "rgba(0, 0, 0, 0)"
-                }
+                  "chartOnly": false,
+                  "width": "100%",
+                  "height": "100%",
+                  "locale": "en",
+                  "colorTheme": "light",
+                  "autosize": true,
+                  "showVolume": true,
+                  "showMA": false,
+                  "hideDateRanges": false,
+                  "hideMarketStatus": false,
+                  "hideSymbolLogo": false,
+                  "scalePosition": "right",
+                  "scaleMode": "Normal",
+                  "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
+                  "fontSize": "10",
+                  "noTimeScale": false,
+                  "valuesTracking": "1",
+                  "changeMode": "price-and-percent",
+                  "chartType": "area",
+                  "maLineColor": "#2962FF",
+                  "maLineWidth": 1,
+                  "maLength": 9,
+                  "headerFontSize": "medium",
+                  "lineWidth": 2,
+                  "lineType": 0,
             });
         }
 
