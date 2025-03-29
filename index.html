@@ -42,7 +42,7 @@
         // Load TradingView widget
         function loadTradingViewWidget(exchange, symbol) {
             document.getElementById('chart-title').textContent = 
-                `${exchange}:${symbol} Price Chart (5m)`;
+                `${exchange}:${symbol} Price Chart (5D)`;
 
             new TradingView.widget({
                   "chartOnly": false,
@@ -70,6 +70,9 @@
                   "headerFontSize": "medium",
                   "lineWidth": 2,
                   "lineType": 0,
+                  "dateRanges": [
+                    "5d|5"
+                  ]
             });
         }
 
