@@ -15,56 +15,38 @@
             height: 500px;
             margin: 0 auto;
         }
-        .symbol-input {
-            margin: 20px 0;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
     </style>
 </head>
 <body>
     <h1 id="chart-title">Loading Chart...</h1>
     
-    <div class="symbol-input">
-        <label for="symbol">Enter Trading Pair (e.g., MEWUSDT.P): </label>
-        <input type="text" id="symbol" placeholder="MEWUSDT.P">
-        <button onclick="updateChart()">Update Chart</button>
-    </div>
-    
     <div class="chart-container">
-        <!-- TradingView Widget Container -->
-        <div id="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            <div class="tradingview-widget-copyright">
-                <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-                    <span class="blue-text">Track all markets on TradingView</span>
-                </a>
-            </div>
-        </div>
+        <div id="tradingview-widget-container"></div>
     </div>
 
     <script>
-        // Get symbol from URL or default to MEWUSDT.P
+        // Get symbol from URL parameter (format: exchange:symbol)
+        // Example: yourpage.html?symbol=BYBIT:MEWUSDT.P
         function getSymbolFromUrl() {
             const params = new URLSearchParams(window.location.search);
-            return params.get('symbol') || 'MEWUSDT.P';
-        }
-
-        // Update the page URL with the new symbol
-        function updateUrl(symbol) {
-            const newUrl = `${window.location.pathname}?symbol=${symbol}`;
-            window.history.pushState({}, '', newUrl);
-        }
-
-        // Load TradingView widget with dynamic symbol
-        function loadTradingViewWidget(symbol) {
-            document.getElementById('chart-title').textContent = `${symbol} Price Chart (5D)`;
-            document.getElementById('symbol').value = symbol;
+            const fullSymbol = params.get('symbol') || 'BYBIT:MEWUSDT.P';
             
+            // Split into exchange and symbol parts
+            const parts = fullSymbol.split(':');
+            return {
+                exchange: parts[0] || 'BYBIT',
+                symbol: parts[1] || 'MEWUSDT.P'
+            };
+        }
+
+        // Load TradingView widget
+        function loadTradingViewWidget(exchange, symbol) {
+            document.getElementById('chart-title').textContent = 
+                `${exchange}:${symbol} Price Chart (5D)`;
+
             new TradingView.widget({
                 "autosize": true,
-                "symbol": `BYBIT:${symbol}|5D`,
+                "symbol": `${exchange}:${symbol}|5D`,
                 "interval": "5D",
                 "timezone": "Etc/UTC",
                 "theme": "light",
@@ -74,7 +56,7 @@
                 "enable_publishing": false,
                 "hide_top_toolbar": false,
                 "hide_side_toolbar": false,
-                "allow_symbol_change": true,
+                "allow_symbol_change": false,
                 "container_id": "tradingview-widget-container",
                 "overrides": {
                     "symbolWatermarkProperties.color": "rgba(0, 0, 0, 0)"
@@ -82,19 +64,10 @@
             });
         }
 
-        // Update chart when user enters new symbol
-        function updateChart() {
-            const symbol = document.getElementById('symbol').value.trim().toUpperCase();
-            if (symbol) {
-                updateUrl(symbol);
-                loadTradingViewWidget(symbol);
-            }
-        }
-
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            const symbol = getSymbolFromUrl();
-            loadTradingViewWidget(symbol);
+            const { exchange, symbol } = getSymbolFromUrl();
+            loadTradingViewWidget(exchange, symbol);
         });
     </script>
 
