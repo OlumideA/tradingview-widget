@@ -1,163 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TradingView Widget with URL Parameter</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    .input-container {
-      margin-bottom: 20px;
-      display: flex;
-      gap: 10px;
-    }
-    #symbol-input {
-      padding: 10px;
-      font-size: 16px;
-      flex-grow: 1;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-    button {
-      padding: 10px 20px;
-      background: #2962FF;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background: #0039cb;
-    }
-    .tradingview-widget-container {
-      height: 500px;
-      margin-top: 20px;
-    }
-    .examples {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #666;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEW/USDT.P TradingView Chart</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .chart-container {
+            width: 100%;
+            height: 500px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-  <h1>TradingView Market Viewer</h1>
-  
-  <div class="input-container">
-    <input 
-      type="text" 
-      id="symbol-input" 
-      placeholder="Enter symbol (e.g. BTC/USD, AAPL, BYBIT:MEWUSDT.P)"
-    >
-    <button id="update-button">Update Chart</button>
-  </div>
-  
-  <div class="examples">
-    Try: <a href="?symbol=BTC/USD">BTC/USD</a> | 
-    <a href="?symbol=AAPL">AAPL</a> | 
-    <a href="?symbol=BYBIT:MEWUSDT.P">BYBIT:MEWUSDT.P</a> |
-    <a href="?symbol=NASDAQ:GOOGL">GOOGL</a>
-  </div>
-  
-  <!-- TradingView Widget Container -->
-  <div class="tradingview-widget-container">
-    <div id="widget" class="tradingview-widget-container__widget"></div>
-    <div class="tradingview-widget-copyright">
-      <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-        <span class="blue-text">Track all markets on TradingView</span>
-      </a>
+    <h1>MEW/USDT.P Price Chart (5D)</h1>
+    
+    <div class="chart-container">
+        <!-- TradingView Widget BEGIN -->
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <div class="tradingview-widget-copyright">
+                <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+                    <span class="blue-text">Track all markets on TradingView</span>
+                </a>
+            </div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+            {
+                "symbols": [
+                    [
+                        "BYBIT:MEWUSDT.P|5D"
+                    ]
+                ],
+                "chartOnly": false,
+                "width": "100%",
+                "height": "100%",
+                "locale": "en",
+                "colorTheme": "light",
+                "autosize": true,
+                "showVolume": true,
+                "showMA": false,
+                "hideDateRanges": false,
+                "hideMarketStatus": false,
+                "hideSymbolLogo": false,
+                "scalePosition": "right",
+                "scaleMode": "Normal",
+                "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
+                "fontSize": "10",
+                "noTimeScale": false,
+                "valuesTracking": "1",
+                "changeMode": "price-and-percent",
+                "chartType": "area",
+                "maLineColor": "#2962FF",
+                "maLineWidth": 1,
+                "maLength": 9,
+                "headerFontSize": "medium",
+                "lineWidth": 2,
+                "lineType": 0,
+                "dateRanges": [
+                    "5d|5"
+                ]
+            }
+            </script>
+        </div>
+        <!-- TradingView Widget END -->
     </div>
-  </div>
-
-  <script>
-    // Function to get URL parameter
-    function getUrlParam(name) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(name);
-    }
     
-    // Function to update URL without reload
-    function updateUrlParam(param, value) {
-      const url = new URL(window.location);
-      url.searchParams.set(param, value);
-      window.history.pushState({}, '', url);
-    }
-    
-    // Load TradingView widget
-    function loadTradingViewWidget(symbol) {
-      // Default symbol if none provided
-      if (!symbol) symbol = "BYBIT:MEWUSDT.P";
-      
-      // Update input field
-      document.getElementById('symbol-input').value = symbol;
-      
-      // Clear previous widget
-      document.getElementById('widget').innerHTML = '';
-      
-      // Create config script
-      const configScript = document.createElement('script');
-      configScript.type = 'text/javascript';
-      configScript.innerHTML = JSON.stringify({
-        "symbols": [[symbol.includes('|') ? symbol : `${symbol}|5D`]],
-        "chartOnly": false,
-        "width": "100%",
-        "height": "100%",
-        "locale": "en",
-        "colorTheme": "light",
-        "autosize": true,
-        "showVolume": true,
-        "showMA": false,
-        "hideDateRanges": false,
-        "hideMarketStatus": false,
-        "hideSymbolLogo": false,
-        "scalePosition": "right",
-        "scaleMode": "Normal",
-        "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
-        "fontSize": "10",
-        "noTimeScale": false,
-        "valuesTracking": "1",
-        "changeMode": "price-and-percent",
-        "chartType": "area",
-        "lineWidth": 2,
-        "lineType": 0,
-        "dateRanges": ["5d|5"]
-      });
-      
-      document.getElementById('widget').appendChild(configScript);
-      
-      // Load TradingView script
-      const tvScript = document.createElement('script');
-      tvScript.type = 'text/javascript';
-      tvScript.src = 'https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js';
-      tvScript.async = true;
-      document.getElementById('widget').appendChild(tvScript);
-    }
-    
-    // Handle form submission
-    document.getElementById('update-button').addEventListener('click', function() {
-      const input = document.getElementById('symbol-input').value.trim();
-      if (input) {
-        updateUrlParam('symbol', input);
-        loadTradingViewWidget(input);
-      }
-    });
-    
-    // Also allow Enter key
-    document.getElementById('symbol-input').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        document.getElementById('update-button').click();
-      }
-    });
-    
-    // Load initial widget based on URL parameter
-    const initialSymbol = getUrlParam('symbol');
-    loadTradingViewWidget(initialSymbol);
-  </script>
+    <p>This widget shows the 5-day price chart for MEW/USDT.P perpetual contract on Bybit.</p>
 </body>
 </html>
