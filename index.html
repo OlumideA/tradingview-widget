@@ -11,9 +11,9 @@
 </div>
 <script>
     setTimeout(() => {
-      document.getElementById('tradingview-widget-container').style.display = 'none';
-    }, 3000);
-    
+      const loader = document.querySelector('#loader, .loader, [class*=load], [id*=load]');
+      if (loader) loader.style.display = 'none';
+    }, 3000);    
     
   function getUrlParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
