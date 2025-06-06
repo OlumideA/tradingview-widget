@@ -10,6 +10,11 @@
   <div class="tradingview-widget-container__widget"></div>
 </div>
 <script>
+    setTimeout(() => {
+      document.getElementById('tradingview-widget-container').style.display = 'none';
+    }, 3000);
+    
+    
   function getUrlParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
