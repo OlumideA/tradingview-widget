@@ -6,7 +6,7 @@
     <title>TradingView Chart</title>
 </head>
 <body>
-<img src="https://raw.githubusercontent.com/OlumideA/tradingview-widget/main/logo.png" alt="Logo" class="logo-overlay">
+<img src="https://raw.githubusercontent.com/OlumideA/tradingview-widget/main/logo.png" alt="Logo" class="centered-logo">
 <div class="tradingview-widget-container" id="tradingview-widget-container"> 
   <div class="tradingview-widget-container__widget" id="tradingview-widget-container-2"></div>
 </div>
@@ -77,20 +77,31 @@
         display: none;
     }
 
-    .tradingview-widget-container {
-        position: relative;
-    }
+    html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    position: relative;
+  }
 
-    .logo-overlay {
-         position: absolute;
-         top: 50%;
-         left: 50%;
-         transform: translate(-50%, -50%);
-         width: 100px; 
-         opacity: 0.2;
-         z-index: 10;
-         pointer-events: none;
-   }
+  .centered-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px; /* or any size you like */
+    opacity: 0.2;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .tradingview-widget-container {
+    height: 100%;
+  }
+
+  .tradingview-widget-container__widget {
+    height: 100%;
+  }
 </style>
 
 </body>
