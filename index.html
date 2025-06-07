@@ -7,6 +7,7 @@
 </head>
 <body>
 <div class="tradingview-widget-container" id="tradingview-widget-container"> 
+  <img src="https://github.com/OlumideA/tradingview-widget/main/logo.png" alt="Logo" class="logo-overlay">
   <div class="tradingview-widget-container__widget" id="tradingview-widget-container-2"></div>
 </div>
 <script>
@@ -75,6 +76,20 @@
     #quizwiz-container {
         display: none;
     }
+
+    .tradingview-widget-container {
+    position: relative;
+    }
+
+    .logo-overlay {
+        position: absolute;
+        top: 10px; 
+        left: 10px;
+        width: 100px; 
+        opacity: 0.2;
+        z-index: 10;
+        pointer-events: none;
+   }
 </style>
 
 </body>
